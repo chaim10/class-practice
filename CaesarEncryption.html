@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Caesar Encryption</title>
+</head>
+
+<body>
+  <style>
+    form {
+      width: 500px;
+      height: 600px;
+      background: #dddddd;
+      border: 1px solid black;
+
+    }
+
+    #left {
+      width: 248px;
+      height: 60px;
+      background: #cccccc;
+      border: 2px solid black;
+      font-size: 16px;
+      margin: 0;
+    }
+
+    #left:hover {
+      background: #039cc2;
+    }
+
+    #right {
+      width: 248px;
+      height: 60px;
+      background: #cccccc;
+      border: 2px solid black;
+      font-size: 16px;
+      margin: 0;
+    }
+
+    #right:hover {
+      background: #039cc2;
+    }
+
+    .c1 {
+      width: 500px;
+      height: 60px;
+    }
+    
+    .c2 {
+      margin-left: 5px;
+      margin-top: 50px;
+      height: 75px;
+    }
+
+    #intxt {
+      border: 1px solid black;
+      width: 200px;
+    }
+
+    #outtxt {
+      border: 1px solid black;
+      width: 200px;
+    }
+
+    #but {
+      width: 150px;
+      height: 50px;
+      margin-left: 100px;
+    }
+  </style>
+
+  <form>
+    <div class="c1">
+      <button id="left" type="button" onclick="leftOn()"><b>Encryption</b></button>
+      <button id="right" type="button" onclick="rightOn()"><b>Decryption</b></button>
+    </div>
+    <div>
+      <div class="c2">
+        <label>Key [1-25] :</label>
+        <input id="key" type="number" min="1" max="25" step="1" value="1">
+      </div>
+      <div class="c2">
+        <label>Input: </label>
+        <input id="intxt" type="text" name="input" placeholder="Enter your text">
+      </div>
+      <div class="c2">
+        <button id=but type="button" onclick="foo()"></button>
+      </div>
+      <div class="c2">
+        <label>Output: </label>
+        <input id="outtxt" type="text" disabled>
+      </div>
+    </div>
+
+
+    <script> 
+      function foo() {
+        
+        switch (document.getElementById('but').innerHTML) {
+          case "Encrypt":
+            encrypt();
+          break;
+          case "Decrypt":
+            decrypt();
+          break;
+          default:
+            alert("CRYPT");
+        }
+      }
+      function leftOn() {
+        document.getElementById('right').style.background = "#cccccc";
+        document.getElementById('right').style.color = "black";        
+        document.getElementById('left').style.background = "#000099";
+        document.getElementById('left').style.color = "#ffffff";
+        document.getElementById('but').innerHTML = "Encrypt";
+
+      }
+
+      function rightOn() {
+        document.getElementById('left').style.background = "#cccccc";
+        document.getElementById('left').style.color = "black";
+        document.getElementById('right').style.background = "#000099";
+        document.getElementById('right').style.color = "#ffffff";
+        document.getElementById('but').innerHTML = "Decrypt";
+      }
+
+      function encrypt() {
+        var str = document.getElementById('intxt').value;
+        document.getElementById('intxt').value = "";
+        document.getElementById('outtxt').value = rShift(str, document.getElementById('key').value);
+        document.getElementById('key').value = "1";
+      }
+
+      function rShift(txt, k) {
+        var str = "";
+        for (i = 0; i < txt.length; i++) {
+          if ((txt.charCodeAt(i) + parseInt(k)) > 126) {
+            // alert(txt.charCodeAt(i)+parseInt(k));
+            str += String.fromCharCode(((txt.charCodeAt(i) + parseInt(k)) - 95));
+          }
+          else {
+            // alert(txt.charCodeAt(i)+parseInt(k));
+            str += String.fromCharCode(txt.charCodeAt(i) +parseInt(k));
+          }
+        }
+        return str;
+      }
+
+      function decrypt() {
+        var str = document.getElementById('intxt').value;
+        document.getElementById('intxt').value = "";
+        document.getElementById('outtxt').value = lShift(str, document.getElementById('key').value);
+        document.getElementById('key').value = "1";
+      }
+
+      function lShift(txt, k) {
+        var str = "";
+        for (i = 0; i < txt.length; i++) {
+          if ((txt.charCodeAt(i) - parseInt(k)) < 32) {
+            // alert(txt.charCodeAt(i)-parseInt(k));
+            str += String.fromCharCode(((txt.charCodeAt(i) - parseInt(k)) + 95));
+          }
+          else {
+            // alert(txt.charCodeAt(i)-parseInt(k));
+            str += String.fromCharCode(txt.charCodeAt(i) - parseInt(k));
+          }
+        }
+        return str;
+      }    
+    </script>
+
+  </form>
+</body>
+
+</html>
